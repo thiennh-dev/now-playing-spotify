@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { getNowPlaying } from "@/lib/spotify";
 import { NextResponse } from "next/server";
 
