@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 type Song = {
   isPlaying: boolean;
@@ -22,19 +23,28 @@ export default function Home() {
     };
 
     fetchSong();
-    const interval = setInterval(fetchSong, 10000);
+    const interval = setInterval(fetchSong, 10000); // fetch every 10 seconds
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <main className="p-8">
-      <h1 className="text-2xl font-bold">Now Playing on Spotify</h1>
+    <main className="p-8 font-sans">
+      <h1 className="text-2xl font-bold">🎵 Now Playing on Spotify</h1>
+
       {!song.isPlaying ? (
-        <p>Nothing is currently playing.</p>
+        <p className="mt-4 text-gray-500">Nothing is currently playing.</p>
       ) : (
         <a href={song.songUrl} target="_blank" rel="noopener noreferrer">
           <div className="mt-4 flex items-center gap-4">
-            <img src={song.albumImageUrl} alt={song.album} className="w-16 h-16" />
+            {song.albumImageUrl && (
+              <Image
+                src={song.albumImageUrl}
+                alt={song.album || "Album cover"}
+                width={64}
+                height={64}
+                className="rounded shadow"
+              />
+            )}
             <div>
               <p className="font-semibold">{song.title}</p>
               <p className="text-gray-500">{song.artist}</p>
